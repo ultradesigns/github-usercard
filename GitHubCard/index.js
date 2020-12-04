@@ -3,6 +3,10 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
+import axios from "axios";
+console.log(axios);
+const request = axios.get("https://api.github.com/users/ultradesigns");
+console.log(request);
 
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
@@ -11,11 +15,64 @@
 
     Skip to STEP 3.
 */
+function createCard(user){
+  //instantiating the elements
+  const cardDiv = document.createElement("div");
+  const profileImg = document.createElement("img");
+  const infoDiv = document.createElement("div");
+  const nameH3 = document.createElement("h3");
+  const userNameP = document.createElement("p");
+  const userLoc = document.createElement("p");
+  const profileRef = document.createElement("p");
+  const linkGit = document.createElement("a");
+  const follower = document.createElement("p");
+  const followings = document.createElement("p");
+  const biography = document.createElement("p");
+  //setting class names, attributes, text
+  cardDiv.classList.add("card");
+  profileImg.setAttribute("src", user.avatar_url);
+  linkGit.textContent = "link to " + user.login
+  nameH3.classList.add("name");
+  userNameP.classList.add("username");
+  profileRef.setAttribute("src", user.html_url);
+  //creating the heirarchy
+  cardDiv.append(profileImg, infoDiv);
+  infoDiv.append(nameH3, userNameP, userLoc, follower,followings, biography);
+  profileRef.append(linkGit);
+
+  //adding some interactivity
+  //return
+  // <div class="card">
+  //     <img src={image url of user} />
+  //     <div class="card-info">
+  //       <h3 class="name">{users name}</h3>
+  //       <p class="username">{users user name}</p>
+  //       <p>Location: {users location}</p>
+  //       <p>Profile:
+  //         <a href={address to users github page}>{address to users github page}</a>
+  //       </p>
+  //       <p>Followers: {users followers count}</p>
+  //       <p>Following: {users following count}</p>
+  //       <p>Bio: {users bio}</p>
+  //     </div>
+  //   </div>
+}
 
 /*
   STEP 4: Pass the data received from Github into your function,
     and append the returned markup to the DOM as a child of .cards
 */
+function insertCard(userName){
+  axios.get(`https://api.github.com/users/${userName}`)
+  .then((res) => {
+    console.log(res)
+    const card = createCard(res.data)
+    document.querySelector("div.cards").appendChild(card)
+  })
+  .catch((err) =>{
+    console.log(err)
+  })
+}
 
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
