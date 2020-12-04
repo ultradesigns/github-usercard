@@ -16,6 +16,7 @@ console.log(request);
     Skip to STEP 3.
 */
 function createCard(user){
+
   //instantiating the elements
   const cardDiv = document.createElement("div");
   const profileImg = document.createElement("img");
@@ -28,20 +29,32 @@ function createCard(user){
   const follower = document.createElement("p");
   const followings = document.createElement("p");
   const biography = document.createElement("p");
+
   //setting class names, attributes, text
   cardDiv.classList.add("card");
   profileImg.setAttribute("src", user.avatar_url);
   linkGit.textContent = "link to " + user.login
+  linkGit.setAttribute("href", user.html_url)
   nameH3.classList.add("name");
+  nameH3.textContent = "name: " + user.name ?? "none";
   userNameP.classList.add("username");
-  profileRef.setAttribute("src", user.html_url);
+  userNameP.textContent = "login: " + user.login;
+  profileRef.textContent = "Profile: ";
+  follower.textContent = "Followers: " + user.followers;
+  followings.textContent = "Following: " + user.following;
+  biography.textContent = "Bio: " + user.bio ? user.bio : "None";
+  userLoc.textContent = "Location: " + user.location ?? "None";
+
   //creating the heirarchy
   cardDiv.append(profileImg, infoDiv);
   infoDiv.append(nameH3, userNameP, userLoc, follower,followings, biography);
   profileRef.append(linkGit);
 
   //adding some interactivity
+  
   //return
+  return cardDiv;
+
   // <div class="card">
   //     <img src={image url of user} />
   //     <div class="card-info">
@@ -85,7 +98,11 @@ function insertCard(userName){
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ["kdolic", "melissa-24", "linds-fonnes","NRHietala", "imjeremiah"];
+
+followersArray.forEach((user) => {
+  insertCard(user);
+})
 
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
